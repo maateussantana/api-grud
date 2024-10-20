@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Document</title>
+    <style>
+    .navbar-fixed-top {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .navbar-collapse {
+              background-color: #343a40;
+              padding: 0 10px;
+    }
+
+          .navbar-dark .navbar-toggler-icon {
+              color: #fff;
+    }
+
+          .navbar-toggler:focus {
+              outline: none;
+    }
+    </style>
+  </head>
+  <body>
+
+    <div class="pos-f-t">
+      <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+          <h5 class="text-white h4">Conteúdo expandido</h5>
+          <span class="text-muted">Expansível, atráves da marca no navbar.</span>
+        </div>
+      </div>
+      <nav class="navbar navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Alterna navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    </div>
+    
+    <div class="container">
+      <form class="needs-validation" novalidate>
+      <h1 style="text-align: center">Cadastrar Pessoa</h1>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <input type="hidden" value="" name="id" id="idPessoa">
+            <label for="nome">Primeiro nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nome"
+              name="nome"
+              placeholder="Nome"
+              value=""
+              required
+            />
+            <div class="valid-feedback">Nome Preenchido</div>
+            <div class="invalid-feedback">Por favor, preencha o nome</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="idade">Idade</label>
+            <input
+              type="text"
+              class="form-control"
+              id="idade"
+              name="idade"
+              placeholder="Idade"
+              value=""
+              required
+            />
+            <div class="valid-feedback">Idade preenchida</div>
+            <div class="invalid-feedback">Por favor, preencha a idade</div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label for="email">Usuário</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Usuário"
+                value=""
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <div class="valid-feedback">Email Preenchido</div>
+              <div class="invalid-feedback">Por favor, preencha o email.</div>
+            </div>
+          </div>
+        </div>
+        <button id="salvarPessoa" class="btn btn-primary" type="submit"><i class="fa-solid fa-floppy-disk""></i> Salvar</button>
+        <button onclick="mostrarTable()" class="btn btn-danger" type="reset" ><i class="fa-solid fa-backspace""></i> Cancelar</button>
+      </form>
+    </div>
+
+
+    <div id="tablePessoa" class="container">
+      <h1 style="text-align: center">Lista de Pessoas</h1>
+      <div style="text-align: end;
+        margin-bottom: 10px;">
+        <button onclick="mostrarForm('Salvar')" class="btn btn-primary" type="submit"> <i class="fa-solid fa-plus"></i> Adicionar</button>
+        </div>
+        
+        <div class="input-group mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nome" aria-label="Buscar por nome" aria-describedby="buttonSearch">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="buttonSearch"><i class="fas fa-search"></i> Buscar</button>
+                <button class="btn btn-outline-secondary" type="button" id="buttonReset"><i class="fas fa-times"></i> Limpar</button>
+            </div>
+        </div>
+     
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Email</th>
+            <th scope="col">Acões</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      // Exemplo de JavaScript inicial para desativar envios de formulário, se houver campos inválidos.
+      (function () {
+        "use strict";
+        window.addEventListener(
+          "load",
+          function () {
+            // Pega todos os formulários que nós queremos aplicar estilos de validação Bootstrap personalizados.
+            var forms = document.getElementsByClassName("needs-validation");
+            // Faz um loop neles e evita o envio
+            var validation = Array.prototype.filter.call(
+              forms,
+              function (form) {
+                form.addEventListener(
+                  "submit",
+                  function (event) {
+                    if (form.checkValidity() === false) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }
+                    form.classList.add("was-validated");
+                  },
+                  false,
+                );
+              },
+            );
+          },
+          false,
+        );
+      })();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  </body>
+</html>
